@@ -1,12 +1,21 @@
-import {useState} from 'react'
+import { useState } from "react";
+import { client } from "../supabase/client";
 
 function Login() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
-  const handleSumit = (e) => {
+  const handleSumit = async (e) => {
     e.preventDefault();
-    console.log(email);
-  }
+
+    try {
+      const result = await client.auth.signUp({
+        email,
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -20,7 +29,7 @@ function Login() {
         <button>Send</button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
